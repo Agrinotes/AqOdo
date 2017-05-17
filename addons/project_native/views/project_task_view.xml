@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<openerp>
+    <data>
+
+        <record id="ganttaps_view_task_form2" model="ir.ui.view">
+            <field name="name">project.task.ganttaps.form</field>
+            <field name="model">project.task</field>
+            <field name="type">ganttaps</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field eval="2" name="priority"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[2]" position="after">
+
+                    <page string="Gantt View">
+                            <group>
+                                <group>
+                                    <field name="date_start"/>
+                                    <field name="date_end"/>
+                                </group>
+                                <group>
+                                    <field name="is_milestone"/>
+                                    <field name="on_gantt"/>
+                                    <field name="date_finished"/>
+                                </group>
+                            </group>
+                    </page>
+
+                    <page string="Predecessor">
+
+                        <field name="predecessor_ids" nolabel="1" widget="one2many_list">
+                            <tree string="Predecessor" editable="bottom" >
+                                <field name="parent_task_id" />
+                                <field name="type"/>
+                            </tree>
+
+                        </field>
+
+                    </page>
+
+
+
+
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_task_ganttaps" model="ir.ui.view">
+            <field name="name">project.task.ganttaps</field>
+            <field name="model">project.task</field>
+            <field name="type">ganttaps</field>
+            <field eval="2" name="priority"/>
+
+            <!--parent_id = 'parent_id'-->
+            <!--tree_seq = 'tree_seq'-->
+            <!--path = 'path'-->
+            <!---->
+            <!--mp_parent_id = 'mp_parent_id'-->
+
+            <!--fold_last_level="true"-->
+            <!--round_dnd_dates="true"-->
+            <!--consolidation="time"-->
+            <!--consolidation_max = '{"user_id": 100}'-->
+            <!--consolidation_exclude = "exclude"-->
+            <!--resources = "user_id"-->
+                                    <!--sort_l = 'sort_l'-->
+                        <!--sort_r = 'sort_r'-->
+             <!--depth = 'depth'-->
+
+                                    <!--name = "name"-->
+                        <!--date_start="date_start"-->
+                        <!--date_stop="date_end"-->
+                        <!--percentage_done = "pl_percentage_done"-->
+                        <!--planned_hours = "pl_planned_hours"-->
+
+                        <!--mp_level = 'mp_level'-->
+
+                        <!--date_deadline = 'date_deadline'-->
+                        <!--progress = 'progress'-->
+
+                        <!--is_milestone = 'is_milestone'-->
+                        <!--on_gantt = 'on_gantt'-->
+   <!--mp_level="mp_level"-->
+
+            <field name="arch" type="xml">
+                <ganttaps
+
+                        default_group_by = "project_id"
+
+                        main_group_id_name = "project_id"
+
+                        name = "name"
+                        date_start="date_start"
+                        date_stop="date_end"
+
+                        user_id = "user_id"
+
+                        sorting_seq="sorting_seq"
+                        sorting_level="sorting_level"
+
+                        project_id="project_id"
+                        date_deadline="date_deadline"
+                        progress="progress"
+                        is_milestone="is_milestone"
+                        on_gantt="on_gantt"
+                        date_done="date_finished"
+
+                        predecessor_model="project.task.predecessor"
+                        predecessor_task_id="task_id"
+                        predecessor_parent_task_id="parent_task_id"
+                        predecessor_type="type"
+
+                        subtask_project_id = "subtask_project_id"
+                        parent_id = "parent_id"
+                        subtask_count = "subtask_count"
+
+                        ghost_id="task_id"
+                        ghost_model="account.analytic.line"
+                        ghost_name="name"
+                        ghost_date_start="date"
+                        ghost_durations="unit_amount"
+
+                     >
+
+                </ganttaps>
+
+            </field>
+
+        </record>
+
+
+        <record id="project.action_view_task" model="ir.actions.act_window">
+            <field name="view_mode">kanban,tree,form,calendar,pivot,graph,ganttaps</field>
+        </record>
+
+        <record id="project.dblc_proj" model="ir.actions.act_window">
+            <field name="view_mode">tree,form,calendar,graph,kanban,ganttaps</field>
+        </record>
+
+        <record id="project.act_project_project_2_project_task_all" model="ir.actions.act_window">
+            <field name="view_mode">kanban,tree,form,calendar,pivot,graph,ganttaps</field>
+        </record>
+
+        <act_window context="{'search_default_user_id': [active_id], 'default_user_id': active_id}"
+                    id="act_res_users_2_project_task_opened" name="Assigned Tasks"
+                    res_model="project.task"
+                    src_model="res.users"
+                    view_mode="tree,form,calendar,graph,ganttaps"
+                    view_type="form"/>
+
+        <record id="hr_timesheet.act_project_task_sub_task" model="ir.actions.act_window">
+            <field name="view_mode">kanban,tree,form,calendar,pivot,graph,ganttaps</field>
+        </record>
+
+    </data>
+</openerp>
